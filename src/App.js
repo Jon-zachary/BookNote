@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-
+import './App.css'
  class App extends React.Component {
  constructor(){
   super();
@@ -34,7 +34,7 @@ import axios from 'axios';
   let bookList;
   if(this.state.books){
   bookList = Object.keys(this.state.books).map((book,i) => {
-     return <li key={i}>{this.state.books[book].title}</li>
+     return <li key={i}>{this.state.books[book].title} by {this.state.books[book].author}</li>
   })
 }
   return bookList;
