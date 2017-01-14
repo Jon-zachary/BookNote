@@ -1,21 +1,28 @@
 import React from 'react';
 import axios from 'axios';
+import BookList from './components/BookList';
+import BookForm from './components/BookForm';
 import './App.css'
  class App extends React.Component {
  constructor(){
   super();
   this.state = {
     books: {},
+    isNewBook: false,
   }
   this.submitBookInfo = this.submitBookInfo.bind(this)
   this.getBooks = this.getBooks.bind(this)
   this.renderBookList = this.renderBookList.bind(this)
+  this.renderNewBookForm = this.renderNewBookForm.bind(this)
+  this.addNewBook = this.addNewBook.bind(this)
  }
 
  componentDidMount(){
   this.getBooks();
  }
+
  submitBookInfo() {
+  this.setState({isNewBook: false})
   const title = this.titleInput.value;
   const author = this.authorInput.value;
   axios.post('https://booknote-5d751.firebaseio.com/.json',{ title, author })
@@ -40,30 +47,55 @@ import './App.css'
   return bookList;
  }
 
+addNewBook(isNewBook){
+  if(!isNewBook){
+  return(
+    <button id="newBookButton"
+    onClick={()=>{this.setState({isNewBook: true})}}>Add New Book</button>
+    )
+  } else{
+    return this.renderNewBookForm()
+  }
+}
+
+
+ renderNewBookForm(){
+  return(
+  <div className='bookform-wrapper'>
+    <input
+    placeholder="Enter book title"
+    type="text"
+    ref={(input) => { this.titleInput = input; }} />
+    <br />
+    <br/>
+    <input
+    placeholder="Enter book author"
+    type="text"
+    ref={(input) => { this.authorInput = input; }} />
+    <br/>
+    <br/>
+    <button  onClick={() =>{this.submitBookInfo(this.bookTitle)}}>Submit</button>
+  </div>
+
+    )
+ }
+
+
+
   render() {
     return (
-      <div>
+      <div className='Wrapper'>
         <h1>BookNote</h1>
-        <input
-          placeholder="Enter book title"
-          type="text"
-          ref={(input) => { this.titleInput = input; }} />
-          <br />
           <br/>
-          <input
-          placeholder="Enter book author"
-          type="text"
-          ref={(input) => { this.authorInput = input; }} />
+          {this.addNewBook(this.state.isNewBook)}
           <br/>
-          <br/>
-          <button  onClick={() =>{this.submitBookInfo(this.bookTitle)}}>Submit</button>
-          <br/>
-          <br/>
-          <ul>{this.renderBookList()}</ul>
+          <BookList renderBookList={this.renderBookList} />
       </div>
     );
   }
 }
 
+//<BookForm renderNewBookForm={this.renderNewBookForm}
+//          submitBookInfo={this.submitBookInfo} />
 
 export default App;
