@@ -15,6 +15,8 @@ import './App.css'
   this.renderBookList = this.renderBookList.bind(this)
   this.renderNewBookForm = this.renderNewBookForm.bind(this)
   this.addNewBook = this.addNewBook.bind(this)
+  this.editBook = this.editBook.bind(this)
+  this.deleteBook = this.deleteBook.bind(this)
  }
 
  componentDidMount(){
@@ -41,10 +43,20 @@ import './App.css'
   let bookList;
   if(this.state.books){
   bookList = Object.keys(this.state.books).map((book,i) => {
-     return <li key={i}>{this.state.books[book].title} by {this.state.books[book].author}</li>
-  })
-}
-  return bookList;
+    return (
+      <span>
+      <i className="fa fa-pencil" aria-hidden="true" onClick={(book)=>{this.editBook()}}></i>
+      <i className="fa fa-times" aria-hidden="true" onClick={()=>{this.deleteBook(book)}}></i>
+      <li key={i} onClick={()=>{this.bookClick()}}>
+     {this.state.books[book].title} by {this.state.books[book].author}</li>
+      </span>
+     )})
+    }
+  return bookList.reverse();
+ }
+
+ bookClick(){
+  alert('clicked')
  }
 
 addNewBook(isNewBook){
@@ -57,7 +69,6 @@ addNewBook(isNewBook){
     return this.renderNewBookForm()
   }
 }
-
 
  renderNewBookForm(){
   return(
@@ -79,7 +90,19 @@ addNewBook(isNewBook){
 
     )
  }
+deleteBook(book){
 
+  console.log(book);
+  axios.delete(`https://booknote-5d751.firebaseio.com/${book}.json`)
+  .then(()=>{
+    this.getBooks();
+  })
+
+}
+
+editBook(book){
+  alert('edit')
+}
 
 
   render() {

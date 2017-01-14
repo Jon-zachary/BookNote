@@ -6,12 +6,22 @@
 }
 
 ul {
+  position:relative;
   list-style: none;
   height: 225px;
   overflow: scroll;
   background-color: slategrey;
+  padding:0;
 }
 
 h1{
   font-family: 'Cherry Swash', cursive;
+}
+.fa {
+  float: left;
+  padding: 0 10px;
+}
+
+.fa-pencil {
+padding-right:0;
 }
