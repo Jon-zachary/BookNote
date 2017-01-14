@@ -9,6 +9,7 @@ import './App.css'
   this.state = {
     books: {},
     isNewBook: false,
+    isEdit: false,
   }
   this.submitBookInfo = this.submitBookInfo.bind(this)
   this.getBooks = this.getBooks.bind(this)
@@ -17,6 +18,7 @@ import './App.css'
   this.addNewBook = this.addNewBook.bind(this)
   this.editBook = this.editBook.bind(this)
   this.deleteBook = this.deleteBook.bind(this)
+  this.cancelSubmmit = this.cancelSubmmit.bind(this)
  }
 
  componentDidMount(){
@@ -24,11 +26,22 @@ import './App.css'
  }
 
  submitBookInfo() {
+  const isEdit = this.state.isEdit;
   this.setState({isNewBook: false})
+  if(!isEdit){
   const title = this.titleInput.value;
   const author = this.authorInput.value;
+
   axios.post('https://booknote-5d751.firebaseio.com/.json',{ title, author })
   .then(()=>{this.getBooks()})
+} else {
+  const title = this.titleInput.value;
+  const author = this.authorInput.value;
+  console.log(title,author);
+  axios.patch(`https://booknote-5d751.firebaseio.com/${this.state.currentBook}.json`, {title, author})
+  .then((response)=>{console.log(response);this.getBooks()})
+}
+
   }
 
  getBooks(){
@@ -36,7 +49,6 @@ import './App.css'
         .then((response) =>{
           this.setState({books: response.data})
         })
-      return this.state.books
  }
 
  renderBookList(){
@@ -44,12 +56,12 @@ import './App.css'
   if(this.state.books){
   bookList = Object.keys(this.state.books).map((book,i) => {
     return (
-      <span>
-      <i className="fa fa-pencil" aria-hidden="true" onClick={(book)=>{this.editBook()}}></i>
+      <div key={i}>
+      <i className="fa fa-pencil" aria-hidden="true" onClick={()=>{this.editBook(book)}}></i>
       <i className="fa fa-times" aria-hidden="true" onClick={()=>{this.deleteBook(book)}}></i>
-      <li key={i} onClick={()=>{this.bookClick()}}>
-     {this.state.books[book].title} by {this.state.books[book].author}</li>
-      </span>
+      <div><li key={i} onClick={()=>{this.bookClick()}}>
+     <p>Title: {this.state.books[book].title}</p> <p id='author'>Author: {this.state.books[book].author}</p></li></div>
+      </div>
      )})
     }
   return bookList.reverse();
@@ -66,11 +78,11 @@ addNewBook(isNewBook){
     onClick={()=>{this.setState({isNewBook: true})}}>Add New Book</button>
     )
   } else{
-    return this.renderNewBookForm()
+    return this.renderNewBookForm(this.state.isEdit)
   }
 }
 
- renderNewBookForm(){
+ renderNewBookForm(isEdit){
   return(
   <div className='bookform-wrapper'>
     <input
@@ -85,14 +97,14 @@ addNewBook(isNewBook){
     ref={(input) => { this.authorInput = input; }} />
     <br/>
     <br/>
-    <button  onClick={() =>{this.submitBookInfo(this.bookTitle)}}>Submit</button>
+    <button  onClick={() =>{this.submitBookInfo()}}>Submit</button>
+    <button onClick={() => {this.cancelSubmmit()}}>Cancel</button>
   </div>
 
     )
  }
-deleteBook(book){
 
-  console.log(book);
+deleteBook(book){
   axios.delete(`https://booknote-5d751.firebaseio.com/${book}.json`)
   .then(()=>{
     this.getBooks();
@@ -101,9 +113,12 @@ deleteBook(book){
 }
 
 editBook(book){
-  alert('edit')
+  this.setState({isNewBook:true,isEdit:true,currentBook: book})
 }
 
+cancelSubmmit(){
+  this.setState({isNewBook:false})
+}
 
   render() {
     return (

@@ -1,3 +1,10 @@
+.clearfix {
+  content:'';
+  display:block;
+  clear:both;
+}
+
+
 .Wrapper {
   display: flex;
   flex-direction: column;
@@ -14,12 +21,21 @@ ul {
   padding:0;
 }
 
+li {
+  border:solid 1px white;
+}
+
+p{
+  margin-right:10px;
+}
+
 h1{
   font-family: 'Cherry Swash', cursive;
 }
 .fa {
-  float: left;
+  float: right;
   padding: 0 10px;
+  font-size: 20px;
 }
 
 .fa-pencil {

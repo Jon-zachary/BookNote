@@ -5,14 +5,12 @@ export default class BookForm extends React.Component {
     name: React.PropTypes.string,
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
+    console.log('bookformfired');
+    console.log(this.props.isNewBook);
     return (
       <div>
-        {this.props.renderNewBookForm()}
+        {this.props.addNewBook(this.props.isNewBook)}
       </div>
     );
   }

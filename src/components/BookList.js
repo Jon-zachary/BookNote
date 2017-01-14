@@ -5,15 +5,9 @@ export default class BookList extends React.Component {
     name: React.PropTypes.string,
   };
 
-  constructor(props) {
-    super(props);
-  }
-
-
-
   render() {
     return (
-      <ul>{this.props.renderBookList()}</ul>
+      <ul className='clearFix'>{this.props.renderBookList()}</ul>
     );
   }
 }
