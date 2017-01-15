@@ -21,6 +21,17 @@
 
 }
 
+.noteview-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+textarea {
+  height:550px;
+  width:300px;
+}
+
 ul {
   position:relative;
   list-style: none;
@@ -30,7 +41,8 @@ ul {
   padding:0;
 }
 
-li {
+li.book-list {
+  list-style: none;
   border:solid 1px white;
   background-image: url('./book_texture.png');
 }
@@ -44,7 +56,12 @@ p{
 h1{
   font-family: 'Cherry Swash', cursive;
 }
-
+.note-list{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
 .book-container{
   background-color: #85501e;

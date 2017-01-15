@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import BookList from './components/BookList';
 import BookForm from './components/BookForm';
+import NoteView from './components/NoteView';
 import './App.css'
  class App extends React.Component {
  constructor(){
@@ -22,6 +23,7 @@ import './App.css'
   this.deleteBook = this.deleteBook.bind(this)
   this.cancelSubmmit = this.cancelSubmmit.bind(this)
   this.addNote = this.addNote.bind(this)
+  this.cancelNote = this.cancelNote.bind(this)
  }
 
  componentDidMount(){
@@ -61,21 +63,29 @@ import './App.css'
     return (
       <div className='book-container' key={i}>
       <span className='icons'>
-      <i className="fa fa-plus" aria-hidden="true" onClick={()=>{this.addNote(book)}}></i>
-      <i className="fa fa-pencil" aria-hidden="true" onClick={()=>{this.editBook(book)}}></i>
-      <i className="fa fa-times" aria-hidden="true" onClick={()=>{this.deleteBook(book)}}></i>
+      <i className="fa fa-plus" aria-hidden="true"
+      onClick={()=>{this.addNote(book)}}></i>
+      <i className="fa fa-pencil" aria-hidden="true"
+      onClick={()=>{this.editBook(book)}}></i>
+      <i className="fa fa-times" aria-hidden="true"
+      onClick={()=>{this.deleteBook(book)}}></i>
       </span>
-      <div><li key={i} >
-     <p>Title: {this.state.books[book].title}</p> <p id='author'>Author: {this.state.books[book].author}</p></li></div>
+      <div><li key={i} className='book-list'>
+     <p>Title: {this.state.books[book].title}</p>
+     <p id='author'>Author: {this.state.books[book].author}</p></li></div>
       </div>
      )})
     }
   return bookList.reverse();
  }
 
- addNote(){
-  this.setState({isAddNote:true})
+ addNote(book){
+  this.setState({isAddNote:true,currentBook:book})
 
+ }
+
+ cancelNote(){
+  this.setState({isAddNote:false})
  }
 
 
@@ -91,16 +101,15 @@ addNewBook(isNewBook){
 }
 
  renderNewBookForm(isEdit){
-  let currentBook=''
+  let currentTitle=''
   let currentAuthor=''
   if(this.state.currentBook){
-  currentBook = this.state.books[this.state.currentBook].title
+  currentTitle = this.state.books[this.state.currentBook].title
   currentAuthor = this.state.books[this.state.currentBook].author}
-  console.log(currentBook);
   return(
   <div className='bookform-wrapper'>
     <input
-    defaultValue={currentBook}
+    defaultValue={currentTitle}
     placeholder="Enter book title"
     type="text"
     ref={(input) => { this.titleInput = input; }} />
@@ -149,10 +158,8 @@ cancelSubmmit(){
     );
    } else {
     return(
-    <div>
-    <input type='text' placeholder='enter pagenumber' />
-    <textarea placeholder='enter note text'></textarea>
-    </div>
+    <NoteView cancelNote={this.cancelNote} books={this.state.books}
+     currentBook={this.state.currentBook}/>
     )
   }
    }
