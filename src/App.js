@@ -10,6 +10,8 @@ import './App.css'
     books: {},
     isNewBook: false,
     isEdit: false,
+    isAddNote: false,
+    currentBook:undefined,
   }
   this.submitBookInfo = this.submitBookInfo.bind(this)
   this.getBooks = this.getBooks.bind(this)
@@ -19,6 +21,7 @@ import './App.css'
   this.editBook = this.editBook.bind(this)
   this.deleteBook = this.deleteBook.bind(this)
   this.cancelSubmmit = this.cancelSubmmit.bind(this)
+  this.addNote = this.addNote.bind(this)
  }
 
  componentDidMount(){
@@ -37,9 +40,9 @@ import './App.css'
 } else {
   const title = this.titleInput.value;
   const author = this.authorInput.value;
-  console.log(title,author);
+
   axios.patch(`https://booknote-5d751.firebaseio.com/${this.state.currentBook}.json`, {title, author})
-  .then((response)=>{console.log(response);this.getBooks()})
+  .then(()=>{this.getBooks()})
 }
 
   }
@@ -56,10 +59,13 @@ import './App.css'
   if(this.state.books){
   bookList = Object.keys(this.state.books).map((book,i) => {
     return (
-      <div key={i}>
+      <div className='book-container' key={i}>
+      <span className='icons'>
+      <i className="fa fa-plus" aria-hidden="true" onClick={()=>{this.addNote(book)}}></i>
       <i className="fa fa-pencil" aria-hidden="true" onClick={()=>{this.editBook(book)}}></i>
       <i className="fa fa-times" aria-hidden="true" onClick={()=>{this.deleteBook(book)}}></i>
-      <div><li key={i} onClick={()=>{this.bookClick()}}>
+      </span>
+      <div><li key={i} >
      <p>Title: {this.state.books[book].title}</p> <p id='author'>Author: {this.state.books[book].author}</p></li></div>
       </div>
      )})
@@ -67,9 +73,11 @@ import './App.css'
   return bookList.reverse();
  }
 
- bookClick(){
-  alert('clicked')
+ addNote(){
+  this.setState({isAddNote:true})
+
  }
+
 
 addNewBook(isNewBook){
   if(!isNewBook){
@@ -83,15 +91,23 @@ addNewBook(isNewBook){
 }
 
  renderNewBookForm(isEdit){
+  let currentBook=''
+  let currentAuthor=''
+  if(this.state.currentBook){
+  currentBook = this.state.books[this.state.currentBook].title
+  currentAuthor = this.state.books[this.state.currentBook].author}
+  console.log(currentBook);
   return(
   <div className='bookform-wrapper'>
     <input
+    defaultValue={currentBook}
     placeholder="Enter book title"
     type="text"
     ref={(input) => { this.titleInput = input; }} />
     <br />
     <br/>
     <input
+    defaultValue={currentAuthor}
     placeholder="Enter book author"
     type="text"
     ref={(input) => { this.authorInput = input; }} />
@@ -121,6 +137,7 @@ cancelSubmmit(){
 }
 
   render() {
+    if(!this.state.isAddNote){
     return (
       <div className='Wrapper'>
         <h1>BookNote</h1>
@@ -130,10 +147,18 @@ cancelSubmmit(){
           <BookList renderBookList={this.renderBookList} />
       </div>
     );
+   } else {
+    return(
+    <div>
+    <input type='text' placeholder='enter pagenumber' />
+    <textarea placeholder='enter note text'></textarea>
+    </div>
+    )
   }
+   }
+
 }
 
-//<BookForm renderNewBookForm={this.renderNewBookForm}
-//          submitBookInfo={this.submitBookInfo} />
+
 
 export default App;

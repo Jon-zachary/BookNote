@@ -3,7 +3,16 @@
   display:block;
   clear:both;
 }
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 10px;
+}
 
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: rgba(0,0,0,.5);
+  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
 
 .Wrapper {
   display: flex;
@@ -15,27 +24,44 @@
 ul {
   position:relative;
   list-style: none;
-  height: 225px;
-  overflow: scroll;
+  height: 500px;
+  overflow-y: scroll;
   background-color: slategrey;
   padding:0;
 }
 
 li {
   border:solid 1px white;
+  background-image: url('./book_texture.png');
 }
 
 p{
   margin-right:10px;
+  color: white;
+  text-align: center;
 }
 
 h1{
   font-family: 'Cherry Swash', cursive;
 }
+
+
+.book-container{
+  background-color: #85501e;
+}
+
+.icons{
+  display:flex;
+  justify-content: center;
+}
+
 .fa {
-  float: right;
   padding: 0 10px;
-  font-size: 20px;
+
+}
+
+.fa-plus{
+  padding-right: 0;
 }
 
 .fa-pencil {
