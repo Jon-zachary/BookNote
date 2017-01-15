@@ -16,16 +16,27 @@ export default class NoteView extends React.Component {
     this.renderNotes = this.renderNotes.bind(this);
     this.getNotes = this.getNotes.bind(this);
     this.addNote = this.addNote.bind(this);
+    this.cancelNote = this.cancelNote.bind(this);
   }
+
+
   componentDidMount(){
     this.getNotes();
   }
+
+
   getNotes(){
   axios.get(`https://booknote-5d751.firebaseio.com/${this.props.currentBook}/notes/.json`)
   .then((response) => {
     this.setState({notes:response.data})
     })
   }
+
+
+  cancelNote(){
+  this.setState({isAddNote:false})
+ }
+
 
   renderNotes(){
     let notes;
@@ -38,9 +49,11 @@ export default class NoteView extends React.Component {
     return notes;
   }
 
+
   addNote(){
     this.setState({isAddNote: true})
   }
+
 
   render() {
     if(!this.state.isAddNote){
@@ -48,18 +61,22 @@ export default class NoteView extends React.Component {
         <div className='note-list'>
         <ul>
         {this.renderNotes()}
-        <button onClick={()=>{this.addNote()}}>Add note</button>
         </ul>
+        <button onClick={()=>{this.addNote()}}>Add note</button>
+        <button onClick={()=>{this.props.cancelSubmit()}}>Cancel</button>
         </div>
         )
-    }
+      }
+
+
     return (
       <div className='noteview-wrapper'>
       <h1>BookNote</h1>
       <h2>{this.props.books[this.props.currentBook].title}</h2>
       <input type='text' placeholder='Enter page number' />
       <textarea className='noteText' placeholder='Enter noteText' />
-      <button onClick={()=>{this.props.cancelNote()}}>Cancel</button>
+      <button onClick={()=>{this.cancelNote()}}>Cancel</button>
+      <button onClick={()=>{this.submitNote()}}>Submit</button>
       </div>
     );
   }

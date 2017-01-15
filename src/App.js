@@ -21,9 +21,8 @@ import './App.css'
   this.addNewBook = this.addNewBook.bind(this)
   this.editBook = this.editBook.bind(this)
   this.deleteBook = this.deleteBook.bind(this)
-  this.cancelSubmmit = this.cancelSubmmit.bind(this)
+  this.cancelSubmit = this.cancelSubmit.bind(this)
   this.addNote = this.addNote.bind(this)
-  this.cancelNote = this.cancelNote.bind(this)
  }
 
  componentDidMount(){
@@ -84,9 +83,6 @@ import './App.css'
 
  }
 
- cancelNote(){
-  this.setState({isAddNote:false})
- }
 
 
 addNewBook(isNewBook){
@@ -123,7 +119,7 @@ addNewBook(isNewBook){
     <br/>
     <br/>
     <button  onClick={() =>{this.submitBookInfo()}}>Submit</button>
-    <button onClick={() => {this.cancelSubmmit()}}>Cancel</button>
+    <button onClick={() => {this.cancelSubmit()}}>Cancel</button>
   </div>
 
     )
@@ -141,8 +137,8 @@ editBook(book){
   this.setState({isNewBook:true,isEdit:true,currentBook: book})
 }
 
-cancelSubmmit(){
-  this.setState({isNewBook:false})
+cancelSubmit(){
+  this.setState({isNewBook:false,isAddNote:false})
 }
 
   render() {
@@ -158,8 +154,9 @@ cancelSubmmit(){
     );
    } else {
     return(
-    <NoteView cancelNote={this.cancelNote} books={this.state.books}
-     currentBook={this.state.currentBook}/>
+    <NoteView books={this.state.books}
+     currentBook={this.state.currentBook}
+     cancelSubmit={this.cancelSubmit}/>
     )
   }
    }
