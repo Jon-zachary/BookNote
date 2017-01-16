@@ -20,6 +20,7 @@ export default class NoteView extends React.Component {
     this.cancelNote = this.cancelNote.bind(this);
     this.submitNote = this.submitNote.bind(this);
     this.editNote = this.editNote.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
   }
 
 
@@ -46,20 +47,33 @@ export default class NoteView extends React.Component {
     if(this.state.notes){
     const noteKeys = Object.keys(this.state.notes);
     notes = noteKeys.map((noteKey,i) =>{
-      return <li className='note-list'
+      return(
+      <div>
+      <i className="fa fa-times" aria-hidden="true"
+      onClick={()=>{this.deleteNote(noteKey)}}></i>
+      <li className='note-list'
       key={i} onClick={()=>{this.editNote(noteKey)}}>
       Notes for page {this.state.notes[noteKey].page}</li>
+      </div>)
     })}
     return notes;
   }
 
   editNote(noteKey){
-    this.setState({isEditNot:true,isAddNote:true})
+    this.setState({isEditNote:true,isAddNote:true})
   }
 
 
   addNote(){
     this.setState({isAddNote: true})
+  }
+
+  deleteNote(noteKey){
+    console.log(noteKey);
+    axios.delete(`https://booknote-5d751.firebaseio.com/${this.props.currentBook}/notes/${noteKey}.json`)
+    .then(()=>{
+      this.getNotes();
+    })
   }
 
   submitNote(){
@@ -78,6 +92,7 @@ export default class NoteView extends React.Component {
       return(
         <div className='note-list'>
         <h1>BookNote</h1>
+        <h2>{this.props.books[this.props.currentBook].title}</h2>
         <button onClick={()=>{this.addNote()}}>Add note</button>
         <button onClick={()=>{this.props.cancelSubmit()}}>Cancel</button>
         <ul className='note-ul'>
