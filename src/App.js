@@ -75,6 +75,9 @@ import './App.css'
       </div>
      )})
     }
+    if(bookList===undefined){
+      return <p>no books yet</p>
+    }
   return bookList.reverse();
  }
 
