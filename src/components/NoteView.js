@@ -21,6 +21,7 @@ export default class NoteView extends React.Component {
     this.submitNote = this.submitNote.bind(this);
     this.editNote = this.editNote.bind(this);
     this.deleteNote = this.deleteNote.bind(this);
+    this.submitEdit = this.submitEdit.bind(this);
   }
 
 
@@ -48,11 +49,12 @@ export default class NoteView extends React.Component {
     const noteKeys = Object.keys(this.state.notes);
     notes = noteKeys.map((noteKey,i) =>{
       return(
-      <div>
+      <div key={i}>
       <i className="fa fa-times" aria-hidden="true"
       onClick={()=>{this.deleteNote(noteKey)}}></i>
-      <li className='note-list'
-      key={i} onClick={()=>{this.editNote(noteKey)}}>
+      <i className="fa fa-pencil" aria-hidden="true"
+      onClick={()=>{this.editNote(noteKey)}}></i>
+      <li className='note-list' key={i}>
       Notes for page {this.state.notes[noteKey].page}</li>
       </div>)
     })}
@@ -60,7 +62,8 @@ export default class NoteView extends React.Component {
   }
 
   editNote(noteKey){
-    this.setState({isEditNote:true,isAddNote:true})
+    console.log(noteKey);
+    this.setState({isEditNote:true,isAddNote:true,currentNote: noteKey})
   }
 
 
@@ -69,7 +72,6 @@ export default class NoteView extends React.Component {
   }
 
   deleteNote(noteKey){
-    console.log(noteKey);
     axios.delete(`https://booknote-5d751.firebaseio.com/${this.props.currentBook}/notes/${noteKey}.json`)
     .then(()=>{
       this.getNotes();
@@ -87,7 +89,18 @@ export default class NoteView extends React.Component {
   }
 
 
+  submitEdit(){
+    const page  = this.page.value
+    const note = this.note.value
+    axios.patch(`https://booknote-5d751.firebaseio.com/${this.props.currentBook}/notes/${this.state.currentNote}.json`,{ page, note})
+    .then((response) =>{
+      this.getNotes();
+      this.cancelNote();
+    })
+  }
+
   render() {
+
     if(!this.state.isAddNote){
       return(
         <div className='note-list'>
@@ -102,13 +115,13 @@ export default class NoteView extends React.Component {
         )
       }
 
-
+    if(!this.state.isEditNote){
     return (
       <div className='noteview-wrapper'>
       <h1>BookNote</h1>
       <h2>{this.props.books[this.props.currentBook].title}</h2>
       <input type='text'
-      className = 'page-input'
+      className='page-input'
       placeholder='Enter page number'
       ref={(input) => { this.page = input; }} />
       <textarea className='noteText'
@@ -119,4 +132,26 @@ export default class NoteView extends React.Component {
       </div>
     );
   }
+  return (
+      <div className='noteview-wrapper'>
+      <h1>BookNote</h1>
+      <h2>{this.props.books[this.props.currentBook].title}</h2>
+      <input type='text'
+      className='page-input'
+      placeholder='Enter page number'
+      defaultValue={ this.state.notes[this.state.currentNote].page}
+      ref={(input) => { this.page = input; }} />
+      <textarea className='noteText'
+      placeholder='Enter noteText'
+      defaultValue={ this.state.notes[this.state.currentNote].note}
+      ref={(input) => { this.note = input; }} />
+      <button onClick={()=>{this.cancelNote()}}>Cancel</button>
+      <button onClick={()=>{this.submitEdit()}}>Submit</button>
+      </div>
+    );
+  }
+
 }
+
+//
+
