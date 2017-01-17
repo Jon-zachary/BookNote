@@ -120,10 +120,12 @@ export default class NoteView extends React.Component {
       <i className="fa fa-plus fa-lg" aria-hidden="true"></i></button>
       </span>
       </div>
+      <div className='list-cancel flex-container'>
       <ul className='note-ul'>
       {this.renderNotes()}
       </ul>
       <button className='cancel-button' onClick={()=>{this.props.cancelSubmit()}}>Cancel</button>
+      </div>
       </div>
     );
   }
