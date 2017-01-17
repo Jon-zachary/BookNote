@@ -56,7 +56,8 @@ export default class NoteView extends React.Component {
       <i className="fa fa-pencil" aria-hidden="true"
       onClick={()=>{this.editNote(noteKey)}}></i>
       <li className='note-list' key={i}>
-      Notes for page {this.state.notes[noteKey].page}
+      Notes for page {this.state.notes[noteKey].page}<br />
+      Last modified: {moment().format('l')}
       </li>
       </div>)
     })}
@@ -70,12 +71,12 @@ export default class NoteView extends React.Component {
   }
 
   editNote(noteKey){
-    this.setState({isEditNote:true,isAddNote:true,currentNote: noteKey})
+    this.setState({isEditNote:true,isAddNote:true,currentNote: noteKey,timeStamp: moment().format('l')})
   }
 
 
   addNote(){
-    this.setState({isAddNote: true})
+    this.setState({isAddNote: true,timeStamp: new Date()})
   }
 
   deleteNote(noteKey){
@@ -121,8 +122,8 @@ export default class NoteView extends React.Component {
       </div>
       <ul className='note-ul'>
       {this.renderNotes()}
-      <button className='cancel-button' onClick={()=>{this.props.cancelSubmit()}}>Cancel</button>
       </ul>
+      <button className='cancel-button' onClick={()=>{this.props.cancelSubmit()}}>Cancel</button>
       </div>
     );
   }

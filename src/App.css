@@ -16,11 +16,11 @@
 .cancel-button{
   position:absolute;
   font-size: 20px;
-  bottom:0;
+  bottom:33%;
   background-color: #85501e;
   border:none;
   width:304px;
-  left:0;
+  left:39.41%;
   font-family: 'PT Mono', monospace;
   border-radius: 5px;
 }
