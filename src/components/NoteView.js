@@ -58,7 +58,13 @@ export default class NoteView extends React.Component {
       Notes for page {this.state.notes[noteKey].page}</li>
       </div>)
     })}
+    if(!notes){
+      return (
+        <div className='empty-notes'>No notes yet</div>
+      )
+    }
     return notes;
+
   }
 
   editNote(noteKey){
@@ -102,22 +108,22 @@ export default class NoteView extends React.Component {
 
     if(!this.state.isAddNote){
       return(
-        <div className='note-list'>
-        <div className='note-header'>
-        <h1>BookNote</h1>
-        <h2>{this.props.books[this.props.currentBook].title}</h2>
-        <span>
-        <button className='add-note-button' onClick={()=>{this.addNote()}}>Add note
-        <i className="fa fa-plus fa-lg" aria-hidden="true"></i></button>
-        </span>
-        </div>
-        <ul className='note-ul'>
-        {this.renderNotes()}
-        <button className='cancel-button' onClick={()=>{this.props.cancelSubmit()}}>Cancel</button>
-        </ul>
-        </div>
-        )
-      }
+      <div className='note-list'>
+      <div className='note-header'>
+      <h1>BookNote</h1>
+      <h2>{this.props.books[this.props.currentBook].title}</h2>
+      <span>
+      <button className='add-note-button' onClick={()=>{this.addNote()}}>Add note
+      <i className="fa fa-plus fa-lg" aria-hidden="true"></i></button>
+      </span>
+      </div>
+      <ul className='note-ul'>
+      {this.renderNotes()}
+      <button className='cancel-button' onClick={()=>{this.props.cancelSubmit()}}>Cancel</button>
+      </ul>
+      </div>
+    );
+  }
 
     if(!this.state.isEditNote){
     return (
