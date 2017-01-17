@@ -23,6 +23,9 @@ export default class NoteView extends React.Component {
     this.editNote = this.editNote.bind(this);
     this.deleteNote = this.deleteNote.bind(this);
     this.submitEdit = this.submitEdit.bind(this);
+    this.renderAddNote = this.renderAddNote.bind(this);
+    this.renderEditNote = this.renderEditNote.bind(this);
+    this.renderDefault = this.renderDefault.bind(this);
   }
 
 
@@ -30,7 +33,7 @@ export default class NoteView extends React.Component {
     this.getNotes();
   }
 
-
+  //gets notes from current book
   getNotes(){
   axios.get(`https://booknote-5d751.firebaseio.com/${this.props.currentBook}/notes/.json`)
   .then((response) => {
@@ -38,12 +41,13 @@ export default class NoteView extends React.Component {
     })
   }
 
-
+  //sets isAddNote to false trigger rendering
   cancelNote(){
   this.setState({isAddNote:false})
  }
 
-
+ //renders the list of notes for the current book, if there are no notes
+ //returns msg that no notes
   renderNotes(){
     let notes;
     if(this.state.notes){
@@ -70,15 +74,19 @@ export default class NoteView extends React.Component {
 
   }
 
+  //sets state triggers render; adds a timestamp to the note which is rendered
+  //in the li
   editNote(noteKey){
     this.setState({isEditNote:true,isAddNote:true,currentNote: noteKey,timeStamp: moment().format('l')})
   }
 
-
+  //sets state triggers render; adds a timestamp to the note which is rendered
+  //in the li
   addNote(){
-    this.setState({isAddNote: true,timeStamp: new Date()})
+    this.setState({isAddNote: true,timeStamp: moment().format('l')})
   }
 
+  //deletes note and calls getNote to re-render based on new state.
   deleteNote(noteKey){
     axios.delete(`https://booknote-5d751.firebaseio.com/${this.props.currentBook}/notes/${noteKey}.json`)
     .then(()=>{
@@ -86,6 +94,9 @@ export default class NoteView extends React.Component {
     })
   }
 
+  //submits a new note with a post call. couldn't get this as compact as
+  //in app component, here I use a two submit methods for a new note and
+  //edited note instead of one method with a condition
   submitNote(){
     const page  = this.page.value
     const note = this.note.value
@@ -107,9 +118,12 @@ export default class NoteView extends React.Component {
     })
   }
 
-  render() {
 
-    if(!this.state.isAddNote){
+//the following three methods render the view depending on whether there is a new
+//note being added, an edited note or the default view. Again it's not as compact
+//as in the app component and this code feels too repetetive but I haven't found
+//the way to condense it and make it DRY
+  renderAddNote(){
       return(
       <div className='note-list'>
       <div className='note-header'>
@@ -124,13 +138,14 @@ export default class NoteView extends React.Component {
       <ul className='note-ul'>
       {this.renderNotes()}
       </ul>
-      <button className='cancel-button' onClick={()=>{this.props.cancelSubmit()}}>Cancel</button>
+      <button className='cancel-button' onClick={()=>{this.props.cancelSubmit()}}>Back</button>
       </div>
       </div>
-    );
+      )
+
   }
 
-    if(!this.state.isEditNote){
+  renderDefault(){
     return (
       <div className='flex-container'>
       <div className='noteview-wrapper'>
@@ -151,7 +166,9 @@ export default class NoteView extends React.Component {
       </div>
     );
   }
-  return (
+
+  renderEditNote(){
+    return (
       <div className='flex-container'>
       <div className='noteview-wrapper'>
       <h1>BookNote</h1>
@@ -172,6 +189,18 @@ export default class NoteView extends React.Component {
       </div>
       </div>
     );
+  }
+
+  render() {
+
+    if(!this.state.isAddNote){
+      return(this.renderAddNote())
+  }
+
+    if(!this.state.isEditNote){
+      return(this.renderDefault())
+  }
+    return(this.renderEditNote())
   }
 
 }

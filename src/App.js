@@ -29,6 +29,8 @@ import './App.css'
   this.getBooks();
  }
 
+ //function checks state to see if the book is new or being edited,
+ //if new it posts book data, if edited it patches it.
  submitBookInfo() {
   const isEdit = this.state.isEdit;
   this.setState({isNewBook: false})
@@ -48,6 +50,7 @@ import './App.css'
 
   }
 
+  //gets book data from firebase and sets the state
  getBooks(){
   axios.get('https://booknote-5d751.firebaseio.com/.json')
         .then((response) =>{
@@ -55,6 +58,8 @@ import './App.css'
         })
  }
 
+ //maps over the book data in state and returns lis with the data, if there are
+ //no books returns msg that says no books yet
  renderBookList(){
   let bookList;
   if(this.state.books){
@@ -81,13 +86,15 @@ import './App.css'
   return bookList.reverse();
  }
 
+ //sets isAddNote var to true and sets a current book in state. State change
+ //triggers rendering which is contingent on isAddNote value
  addNote(book){
   this.setState({isAddNote:true,currentBook:book})
-
  }
 
 
-
+//checks the isNewBook var if it's true it renders a form for a new book,
+//if it's false it it returns a button to add a new book
 addNewBook(isNewBook){
   if(!isNewBook){
   return(
@@ -100,7 +107,8 @@ addNewBook(isNewBook){
   }
 }
 
- renderNewBookForm(isEdit){
+//renders a form to enter new book data with buttons to submit or cancel
+ renderNewBookForm(){
   let currentTitle=''
   let currentAuthor=''
   if(this.state.currentBook){
@@ -125,10 +133,10 @@ addNewBook(isNewBook){
     <button className='cancel-book-button' onClick={() => {this.cancelSubmit()}}>
     <i className="fa fa-times cancel-book" aria-hidden="true"></i>Cancel</button>
   </div>
-
     )
  }
 
+//deletes book and calls getBooks to re-render updated data
 deleteBook(book){
   axios.delete(`https://booknote-5d751.firebaseio.com/${book}.json`)
   .then(()=>{
@@ -137,32 +145,37 @@ deleteBook(book){
 
 }
 
+//sets isEdit to true triggers rendering contingent on isEdit
 editBook(book){
   this.setState({isNewBook:true,isEdit:true,currentBook: book})
 }
 
+//triggers rendering contingent on isNewBook and isAddnote, sets currentBook
+//to null so renderNewBookForm takes correct default value
 cancelSubmit(){
-  this.setState({isNewBook:false,isAddNote:false})
+  this.setState({isNewBook:false,isAddNote:false,currentBook:null})
 }
 
+  //render method with BookForm,Booklist and NoteView components, the first two
+  //just sort of tidy things up but NoteView is a major component
   render() {
     if(!this.state.isAddNote){
     return (
       <div className='flex-container'>
       <div className='Wrapper' >
         <h1>BookNote</h1>
-          {this.addNewBook(this.state.isNewBook)}
+          <BookForm isNewBook={this.state.isNewBook} addNewBook={this.addNewBook} />
           <BookList renderBookList={this.renderBookList} />
       </div>
       </div>
     );
-   } else {
+   }
     return(
     <NoteView books={this.state.books}
      currentBook={this.state.currentBook}
      cancelSubmit={this.cancelSubmit}/>
     )
-  }
+
    }
 
 }
