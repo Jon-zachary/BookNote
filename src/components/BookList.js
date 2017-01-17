@@ -7,7 +7,7 @@ export default class BookList extends React.Component {
 
   render() {
     return (
-      <ul className='clearFix'>{this.props.renderBookList()}</ul>
+      <ul >{this.props.renderBookList()}</ul>
     );
   }
 }

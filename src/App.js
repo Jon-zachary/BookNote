@@ -91,8 +91,9 @@ import './App.css'
 addNewBook(isNewBook){
   if(!isNewBook){
   return(
-    <button id="newBookButton"
-    onClick={()=>{this.setState({isNewBook: true})}}>Add New Book</button>
+    <button className='new-book-button'
+    onClick={()=>{this.setState({isNewBook: true})}}>Add Book
+    <i className="fa fa-plus" aria-hidden="true"></i></button>
     )
   } else{
     return this.renderNewBookForm(this.state.isEdit)
@@ -108,21 +109,21 @@ addNewBook(isNewBook){
   return(
   <div className='bookform-wrapper'>
     <input
+    className='title-input'
     defaultValue={currentTitle}
     placeholder="Enter book title"
     type="text"
     ref={(input) => { this.titleInput = input; }} />
-    <br />
-    <br/>
     <input
+    className='author-input'
     defaultValue={currentAuthor}
     placeholder="Enter book author"
     type="text"
     ref={(input) => { this.authorInput = input; }} />
-    <br/>
-    <br/>
-    <button  onClick={() =>{this.submitBookInfo()}}>Submit</button>
-    <button onClick={() => {this.cancelSubmit()}}>Cancel</button>
+    <button  className='submit-book-button' onClick={() =>{this.submitBookInfo()}}>
+    <i className="fa fa-plus submit-book" aria-hidden="true"></i>Add Book</button>
+    <button className='cancel-book-button' onClick={() => {this.cancelSubmit()}}>
+    <i className="fa fa-times cancel-book" aria-hidden="true"></i>Cancel</button>
   </div>
 
     )
@@ -147,12 +148,12 @@ cancelSubmit(){
   render() {
     if(!this.state.isAddNote){
     return (
-      <div className='Wrapper'>
+      <div className='flex-container'>
+      <div className='Wrapper' >
         <h1>BookNote</h1>
-          <br/>
           {this.addNewBook(this.state.isNewBook)}
-          <br/>
           <BookList renderBookList={this.renderBookList} />
+      </div>
       </div>
     );
    } else {

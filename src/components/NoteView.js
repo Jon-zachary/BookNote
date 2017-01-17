@@ -62,7 +62,6 @@ export default class NoteView extends React.Component {
   }
 
   editNote(noteKey){
-    console.log(noteKey);
     this.setState({isEditNote:true,isAddNote:true,currentNote: noteKey})
   }
 
@@ -104,12 +103,17 @@ export default class NoteView extends React.Component {
     if(!this.state.isAddNote){
       return(
         <div className='note-list'>
+        <div className='note-header'>
         <h1>BookNote</h1>
         <h2>{this.props.books[this.props.currentBook].title}</h2>
-        <button onClick={()=>{this.addNote()}}>Add note</button>
-        <button onClick={()=>{this.props.cancelSubmit()}}>Cancel</button>
+        <span>
+        <button className='add-note-button' onClick={()=>{this.addNote()}}>Add note
+        <i className="fa fa-plus fa-lg" aria-hidden="true"></i></button>
+        </span>
+        </div>
         <ul className='note-ul'>
         {this.renderNotes()}
+        <button className='cancel-button' onClick={()=>{this.props.cancelSubmit()}}>Cancel</button>
         </ul>
         </div>
         )
@@ -117,6 +121,7 @@ export default class NoteView extends React.Component {
 
     if(!this.state.isEditNote){
     return (
+      <div className='flex-container'>
       <div className='noteview-wrapper'>
       <h1>BookNote</h1>
       <h2>{this.props.books[this.props.currentBook].title}</h2>
@@ -130,9 +135,11 @@ export default class NoteView extends React.Component {
       <button onClick={()=>{this.cancelNote()}}>Cancel</button>
       <button onClick={()=>{this.submitNote()}}>Submit</button>
       </div>
+      </div>
     );
   }
   return (
+      <div className='flex-container'>
       <div className='noteview-wrapper'>
       <h1>BookNote</h1>
       <h2>{this.props.books[this.props.currentBook].title}</h2>
@@ -148,10 +155,10 @@ export default class NoteView extends React.Component {
       <button onClick={()=>{this.cancelNote()}}>Cancel</button>
       <button onClick={()=>{this.submitEdit()}}>Submit</button>
       </div>
+      </div>
     );
   }
 
 }
 
 //
-

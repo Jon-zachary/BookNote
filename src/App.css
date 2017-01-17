@@ -4,23 +4,63 @@
   clear:both;
 }
 
+.add-note-button{
+  font-size: 20px;
+  float: center;
+  background-color: #85501e;
+  border:none;
+  font-family: 'PT Mono', monospace;
+  border-radius: 5px;
+}
+
+.cancel-button{
+  position:absolute;
+  font-size: 20px;
+  bottom:0;
+  background-color: #85501e;
+  border:none;
+  width:304px;
+  left:0;
+  font-family: 'PT Mono', monospace;
+  border-radius: 5px;
+}
+
+.flex-container{
+  display: flex;
+  justify-content: center;
+}
 
 .Wrapper {
-  display: flex;
+  display:flex;
   flex-direction: column;
   align-items: center;
-
+  width:300px;
+  background-image: url('./book_texture.png');
+  margin:0;
 }
+
+.note-header{
+  width:300px;
+  background-image: url('./book_texture.png')
+}
+
 
 .noteview-wrapper{
   display: flex;
   flex-direction: column;
   align-items: center;
+  width:400px;
+  height:700px;
+  background-size: cover;
+  background-position: center;
+  background-image: url('./paper.jpg');
 }
 
 textarea {
-  height:275px;
-  width:200px;
+  font-size: 20px;
+  height:450px;
+  width:350px;
+  font-family: 'PT Mono', monospace;
 }
 
 ul {
@@ -33,16 +73,46 @@ ul {
 }
 
 ul.note-ul{
+  height:400px;
+  position:relative;
   background-image: url('./paper.jpg');
   background-size: cover;
   background-position: center;
+  margin:0;
 }
 
 li.book-list {
   list-style: none;
   border:solid 3px black;
   background-image: url('./book_texture.png');
+}
 
+.new-book-button {
+font-family: 'PT Mono', monospace;
+font-size: 20px;
+background-color: #85501e;
+border:none;
+border-radius:5px;
+}
+
+.submit-book-button {
+font-family: 'PT Mono', monospace;
+font-size: 20px;
+background-color: #85501e;
+border:none;
+border-radius:5px;
+size:20px;
+margin-left: 25px;
+}
+
+.cancel-book-button {
+font-family: 'PT Mono', monospace;
+font-size: 20px;
+background-color: #85501e;
+border:none;
+border-radius:5px;
+size:20px;
+margin-left:10px;
 }
 
 p{
@@ -50,21 +120,29 @@ p{
   margin-left:10px;
   color: white;
   text-align: center;
+  font-family: 'PT Mono', monospace;
 }
 
 li.note-list {
+  display: flex;
+  justify-content: space-between;
   color:#85501e;
   width:300px;
-  font-size: 30px;
+  font-size: 20px;
   text-align:justify;
+  font-family: 'PT Mono', monospace;
+  border:solid 2px black;
 }
 
 h1{
   font-family: 'Cherry Swash', cursive;
+  margin:0;
 }
 
 h2{
   margin-top:0;
+  margin-bottom:5px;
+  font-family: 'Cherry Swash', cursive;
 }
 div.note-list{
   display: flex;
@@ -73,9 +151,26 @@ div.note-list{
   text-align: center;
 }
 
+.note-buttons {
+  display: flex;
+}
+
+.title-input{
+  font-size: 20px;
+  font-family: 'PT Mono', monospace;
+  margin:5px 0 5px 25px;
+}
+
+.author-input{
+  font-size: 18px;
+  font-family: 'PT Mono', monospace;
+  margin:5px 0 10px 25px;
+}
+
 .page-input{
   margin-bottom:10px;
   font-size: 18px;
+  font-family: 'PT Mono', monospace;
 }
 
 .book-container{
@@ -98,4 +193,12 @@ div.note-list{
 
 .fa-pencil {
 padding-right:0;
+}
+
+.submit-book {
+  padding-left: 0;
+}
+
+.cancel-book {
+  padding:0;
 }

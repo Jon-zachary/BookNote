@@ -6,8 +6,6 @@ export default class BookForm extends React.Component {
   };
 
   render() {
-    console.log('bookformfired');
-    console.log(this.props.isNewBook);
     return (
       <div>
         {this.props.addNewBook(this.props.isNewBook)}
