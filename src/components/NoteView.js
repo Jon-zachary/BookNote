@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import moment from 'moment'
 
 export default class NoteView extends React.Component {
   static propTypes = {
@@ -55,7 +56,8 @@ export default class NoteView extends React.Component {
       <i className="fa fa-pencil" aria-hidden="true"
       onClick={()=>{this.editNote(noteKey)}}></i>
       <li className='note-list' key={i}>
-      Notes for page {this.state.notes[noteKey].page}</li>
+      Notes for page {this.state.notes[noteKey].page}
+      </li>
       </div>)
     })}
     if(!notes){
@@ -138,8 +140,10 @@ export default class NoteView extends React.Component {
       <textarea className='noteText'
       placeholder='Enter noteText'
       ref={(input) => { this.note = input; }} />
-      <button onClick={()=>{this.cancelNote()}}>Cancel</button>
-      <button onClick={()=>{this.submitNote()}}>Submit</button>
+      <div className='note-buttons'>
+      <button className='cancel-book-button' onClick={()=>{this.cancelNote()}}>Cancel</button>
+      <button className='submit-book-button' onClick={()=>{this.submitNote()}}>Submit</button>
+      </div>
       </div>
       </div>
     );
@@ -158,8 +162,10 @@ export default class NoteView extends React.Component {
       placeholder='Enter noteText'
       defaultValue={ this.state.notes[this.state.currentNote].note}
       ref={(input) => { this.note = input; }} />
-      <button onClick={()=>{this.cancelNote()}}>Cancel</button>
-      <button onClick={()=>{this.submitEdit()}}>Submit</button>
+      <div className='note-buttons'>
+      <button className='cancel-book-button' onClick={()=>{this.cancelNote()}}>Cancel</button>
+      <button className='submit-book-button' onClick={()=>{this.submitEdit()}}>Submit</button>
+      </div>
       </div>
       </div>
     );
