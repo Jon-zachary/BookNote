@@ -83,7 +83,7 @@ export default class NoteView extends React.Component {
   //sets state triggers render; adds a timestamp to the note which is rendered
   //in the li
   addNote(){
-    this.setState({isAddNote: true,timeStamp: moment().format('l')})
+    this.setState({isAddNote: true,isEditNote:false,timeStamp: moment().format('l')})
   }
 
   //deletes note and calls getNote to re-render based on new state.

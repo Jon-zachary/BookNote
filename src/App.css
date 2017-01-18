@@ -20,7 +20,7 @@
   font-size: 20px;
   background-color: #85501e;
   border:none;
-  width:304px;
+  width:400px;
   font-family: 'PT Mono', monospace;
   border-radius: 5px;
 }
@@ -34,13 +34,13 @@
   display:flex;
   flex-direction: column;
   align-items: center;
-  width:300px;
+  width:400px;
   background-image: url('./book_texture.png');
   margin:0;
 }
 
 .note-header{
-  width:300px;
+  width:400px;
   background-image: url('./book_texture.png')
 }
 
@@ -57,7 +57,7 @@
 }
 .empty-notes{
   height:400px;
-  width:300px;
+  width:400px;
   font-family: 'PT Mono', monospace;
   font-size: 20px;
 }
@@ -75,6 +75,7 @@ ul {
   overflow-y: scroll;
   background-image:  url('./book_texture.png');
   padding:0;
+
 }
 
 ul.note-ul{
@@ -86,9 +87,23 @@ ul.note-ul{
 }
 
 li.book-list {
+  width:380px;
   list-style: none;
   border:solid 3px black;
+  border-radius: 5px;
   background-image: url('./book_texture.png');
+  margin-right: 0;
+}
+
+div {
+  margin:0;
+}
+span.icons {
+  border:solid 1px black;
+  border-radius:5px;
+  width:385px;
+  height:20px;
+  background-color: #85501e;
 }
 
 .new-book-button {
@@ -119,6 +134,7 @@ size:20px;
 margin-left:10px;
 }
 
+
 p{
   margin-right:10px;
   margin-left:10px;
@@ -131,7 +147,7 @@ li.note-list {
   display: flex;
   justify-content: space-between;
   color:#85501e;
-  width:300px;
+  width:400px;
   font-size: 20px;
   text-align:justify;
   font-family: 'PT Mono', monospace;
@@ -178,7 +194,7 @@ div.note-list{
 }
 
 .book-container{
-  background-color: #85501e;
+
 }
 
 .icons{
