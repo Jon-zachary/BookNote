@@ -33,22 +33,18 @@ import './App.css'
  //if new it posts book data, if edited it patches it.
  submitBookInfo() {
   const isEdit = this.state.isEdit;
+  const title = this.titleInput.value;
+  const author = this.authorInput.value;
   this.setState({isNewBook: false})
   if(!isEdit){
-  const title = this.titleInput.value;
-  const author = this.authorInput.value;
-
   axios.post('https://booknote-5d751.firebaseio.com/.json',{ title, author })
   .then(()=>{this.getBooks()})
-} else {
-  const title = this.titleInput.value;
-  const author = this.authorInput.value;
-
+  } 
+  else {
   axios.patch(`https://booknote-5d751.firebaseio.com/${this.state.currentBook}.json`, {title, author})
   .then(()=>{this.getBooks()})
-}
-
   }
+}
 
   //gets book data from firebase and sets the state
  getBooks(){
@@ -68,11 +64,11 @@ import './App.css'
       <div className='book-container' key={i}>
       <span className='icons'>
       <i className="fa fa-plus" aria-hidden="true"
-      onClick={()=>{this.addNote(book)}}></i>
+      onClick={()=>{this.addNote(book)}}>Add/View notes</i>
       <i className="fa fa-pencil" aria-hidden="true"
-      onClick={()=>{this.editBook(book)}}></i>
+      onClick={()=>{this.editBook(book)}}>Edit book</i>
       <i className="fa fa-times" aria-hidden="true"
-      onClick={()=>{this.deleteBook(book)}}></i>
+      onClick={()=>{this.deleteBook(book)}}>Delete book</i>
       </span>
       <div><li key={i} className='book-list'>
      <p>Title: {this.state.books[book].title}</p>
