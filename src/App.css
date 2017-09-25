@@ -42,6 +42,7 @@ ul {
 .flex-container{
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .Wrapper {
@@ -81,7 +82,7 @@ ul {
 
 
 ul.note-ul{
-  height:500px;
+  height:600px;
   background-image: url('./paper.jpg');
   background-size: cover;
   background-position: center;
@@ -100,6 +101,7 @@ li.book-list {
 div {
   margin:0;
 }
+
 span.icons {
   border:solid 1px black;
   border-radius:5px;
@@ -171,10 +173,16 @@ div.note-list{
   flex-direction: column;
   align-items: center;
   text-align: center;
+  margin-top:100px;
+  height:600px;
 }
 @media only screen and (max-width: 768px) {
-  .Wrapper{position: inherit;
-           height: 100%;}
+  .Wrapper{position: absolute;
+           top: 0;
+           border-radius: 0;
+           }
+  ul {position: relative;
+      height: 100%;}
   }
 
 .note-buttons {
