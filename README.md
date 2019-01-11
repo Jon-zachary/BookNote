@@ -7,3 +7,5 @@ This project was made with the following technologies:
 * Firebase
 * Axios
 * Moment.js
+
+[See it here](https://jon-zachary.github.io/BookNote/)
