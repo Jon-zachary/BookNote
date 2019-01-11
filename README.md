@@ -7,8 +7,3 @@ This project was made with the following technologies:
 * Firebase
 * Axios
 * Moment.js
-
-##Images:
-[Image 1](https://github.com/Jon-zachary/BookNote/edit/master/public/app-shot1.png)
-[image 2](https://github.com/Jon-zachary/BookNote/edit/master/public/app-shot2.png)
-[image 3](https://github.com/Jon-zachary/BookNote/edit/master/public/app-shot3.png)
